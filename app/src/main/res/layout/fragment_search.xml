@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="my.app.uiPracticeApp.viewModels.SearchViewModel" />
+        
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/city_text_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            app:boxStrokeColor="@color/colorOnPrimary"
+            app:hintTextColor="@color/colorOnPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/date_text_input_layout"
+            app:layout_constraintCircleRadius="30dp"
+            app:layout_constraintEnd_toStartOf="@id/country_text_input_layout"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@={viewModel.cityName}"
+                android:hint="City"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/country_text_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="30dp"
+            app:boxStrokeColor="@color/colorOnPrimary"
+            app:hintTextColor="@color/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/city_text_input_layout"
+            app:layout_constraintCircleRadius="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/city_text_input_layout"
+            app:layout_constraintTop_toTopOf="@id/city_text_input_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@={viewModel.countyName}"
+                android:hint="Country"
+                android:maxLines="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/date_text_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginTop="20dp"
+            android:visibility="@{viewModel.showDate ? View.VISIBLE : View.GONE}"
+            app:boxStrokeColor="@color/colorOnPrimary"
+            app:hintTextColor="@color/colorOnPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/more_filters_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/city_text_input_layout"
+            app:layout_constraintVertical_chainStyle="packed"
+            >
+
+            <com.msa.dateedittext.DateEditText
+                android:id="@+id/date_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@={viewModel.date}"
+                app:dateFormat="ddMMyyyy"
+                app:dividerCharacter="slash"
+                android:hint="Date"
+                >
+            </com.msa.dateedittext.DateEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <ImageView
+            android:id="@+id/date"
+            style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_date_24dp"
+            android:onClick="@{() -> viewModel.clickDateImage()}"
+            android:visibility="@{viewModel.showDate ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/date_text_input_layout"
+            app:layout_constraintStart_toEndOf="@id/date_text_input_layout"
+            app:layout_constraintTop_toTopOf="@id/date_text_input_layout"/>
+
+
+        <TextView
+            android:id="@+id/more_filters_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/selector_more_less"
+            android:gravity="center"
+            android:text="More filters"
+            android:layout_marginTop="15dp"
+            android:onClick="@{() -> viewModel.clickMoreFilters()}"
+            app:layout_constraintBottom_toTopOf="@id/from_date_text_input_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_text_input_layout"
+            >
+        </TextView>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/from_date_text_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:visibility="@{viewModel.isExpanded ?  View.VISIBLE : View.GONE}"
+            app:boxStrokeColor="@color/colorOnPrimary"
+            app:hintTextColor="@color/colorOnPrimary"
+            app:layout_constraintCircleRadius="30dp"
+            app:layout_constraintEnd_toStartOf="@id/to_date_text_input_layout"
+            app:layout_constraintBottom_toTopOf="@id/search_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/more_filters_text_view"
+            tools:visibility="visible">
+
+            <com.msa.dateedittext.DateEditText
+                android:id="@+id/from_date_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@={viewModel.fromDate}"
+                android:hint="From date"
+                app:dateFormat="ddMMyyyy"
+                app:dividerCharacter="slash" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/from_date_image_view"
+            style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_date_24dp"
+            android:onClick="@{() -> viewModel.clickFromDateImage()}"
+            android:visibility="@{viewModel.isExpanded ?  View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/from_date_text_input_layout"
+            app:layout_constraintStart_toEndOf="@+id/from_date_text_input_layout"
+            app:layout_constraintTop_toTopOf="@+id/from_date_text_input_layout"
+            tools:visibility="visible"
+            />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/to_date_text_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="44dp"
+            app:boxStrokeColor="@color/colorOnPrimary"
+            app:hintTextColor="@color/colorOnPrimary"
+            android:visibility="@{viewModel.isExpanded ?  View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/from_date_text_input_layout"
+            app:layout_constraintCircleRadius="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/from_date_text_input_layout"
+            app:layout_constraintTop_toBottomOf="@id/date_text_input_layout"
+            app:layout_constraintTop_toTopOf="@+id/from_date_text_input_layout"
+            tools:visibility="visible"
+            >
+
+            <com.msa.dateedittext.DateEditText
+                android:id="@+id/to_date_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@={viewModel.toDate}"
+                android:hint="To date"
+                app:dateFormat="ddMMyyyy"
+                app:dividerCharacter="slash"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/to_date_image_view"
+            style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_date_24dp"
+            android:onClick="@{() -> viewModel.clickToDateImage()}"
+            android:visibility="@{viewModel.isExpanded ?  View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/to_date_text_input_layout"
+            app:layout_constraintStart_toEndOf="@+id/to_date_text_input_layout"
+            app:layout_constraintTop_toTopOf="@+id/to_date_text_input_layout"
+            tools:visibility="visible"
+            />
+
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Button"
+            android:text="Serch"
+            android:backgroundTint="@color/colorOnPrimary"
+            android:layout_marginTop="10dp"
+            android:onClick="@{() -> viewModel.searchButtonClicked()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/from_date_text_input_layout"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

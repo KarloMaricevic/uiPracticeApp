@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <include
+            android:id="@+id/position_counter"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:layout_marginStart="17dp"
+            android:layout_width="match_parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            layout="@layout/layout_recycler_view_position_counter" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:foregroundGravity="center"
+            android:id="@+id/location_list_recycler_view"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/position_counter"
+            app:layout_constraintVertical_weight="10"
+            tools:listitem="@layout/item_location" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
