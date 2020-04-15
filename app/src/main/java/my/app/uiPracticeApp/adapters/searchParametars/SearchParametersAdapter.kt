@@ -37,6 +37,5 @@ class ItemSearchParametersViewHolder(private val mBinding: ItemSearchParametarBi
 
     fun setDate(parameter: String) {
         mBinding.parameterMeasure.text = parameter
-        mBinding.executePendingBindings()
     }
 }
