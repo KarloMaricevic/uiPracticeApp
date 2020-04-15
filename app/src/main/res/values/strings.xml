@@ -7,4 +7,15 @@
     <string name="search">Search</string>
     <string name="bookmarked">Bookmarked</string>
     <string name="settings">Settings</string>
+    <string name="slash">/</string>
+    <string name="days">DAYS</string>
+    <string name="euro_sign">€</string>
+    <string name="city_hint">City</string>
+    <string name="country_hint">Country</string>
+    <string name="date_hint">Date</string>
+    <string name="more_filters">More filters</string>
+    <string name="from_date_hint">From date</string>
+    <string name="to_date_hint">To date</string>
+    <string name="serch">Serch</string>
+    <string name="locations_for_you">Locations for you</string>
 </resources>
