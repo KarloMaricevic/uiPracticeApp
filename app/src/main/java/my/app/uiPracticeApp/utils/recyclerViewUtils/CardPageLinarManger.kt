@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class CardPageLinarManger(
-        context: Context,
-        orientation: Int = RecyclerView.VERTICAL,
-        maxDistance: Int? = null,
-        private val mMaxElevation: Float = 20f
+    context: Context,
+    orientation: Int = RecyclerView.VERTICAL,
+    maxDistance: Int? = null,
+    private val mMaxElevation: Float = 20f
 ) : LinearLayoutManager(context, orientation, false) {
-
 
     private val mMaxDistanceFromCenter: Int = maxDistance ?: -1
 
@@ -20,18 +19,17 @@ class CardPageLinarManger(
         LinearManagerDistanceMeasure.createVerticalDistanceMeasure()
     } else LinearManagerDistanceMeasure.createHorizontalDistanceMeasure()
 
-
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
         return RecyclerView.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
 
     override fun scrollHorizontallyBy(
-            dx: Int,
-            recycler: RecyclerView.Recycler?,
-            state: RecyclerView.State?
+        dx: Int,
+        recycler: RecyclerView.Recycler?,
+        state: RecyclerView.State?
     ): Int {
         if (orientation == HORIZONTAL) {
             updateChildrenAlpha()
@@ -41,9 +39,9 @@ class CardPageLinarManger(
     }
 
     override fun scrollVerticallyBy(
-            dy: Int,
-            recycler: RecyclerView.Recycler?,
-            state: RecyclerView.State?
+        dy: Int,
+        recycler: RecyclerView.Recycler?,
+        state: RecyclerView.State?
     ): Int {
         if (orientation == VERTICAL) {
             updateChildrenAlpha()
@@ -58,17 +56,16 @@ class CardPageLinarManger(
         updateChildrenTranslationZ()
     }
 
-
     private fun updateChildrenAlpha() {
         for (i in 0 until childCount) {
             val child = getChildAt(i)
             if (child != null) {
                 val centerOfChildVertical =
-                        mDistanceMeasure.getChildCenterPositionRelativeToViewGroup(child, this)
+                    mDistanceMeasure.getChildCenterPositionRelativeToViewGroup(child, this)
                 when {
                     mMaxDistanceFromCenter != -1 && mDistanceMeasure.getDistanceFromChildCenterToViewGroupCenter(
-                            child,
-                            this
+                        child,
+                        this
                     ) >= mMaxDistanceFromCenter -> {
                         child.alpha = 0f
                     }
@@ -92,11 +89,11 @@ class CardPageLinarManger(
             val child = getChildAt(i)
             if (child != null) {
                 val centerOfChildVertical =
-                        mDistanceMeasure.getChildCenterPositionRelativeToViewGroup(child, this)
+                    mDistanceMeasure.getChildCenterPositionRelativeToViewGroup(child, this)
                 when {
                     mMaxDistanceFromCenter != -1 && mDistanceMeasure.getDistanceFromChildCenterToViewGroupCenter(
-                            child,
-                            this
+                        child,
+                        this
                     ) >= mMaxDistanceFromCenter -> {
                         child.elevation = 0f
                     }
@@ -118,15 +115,19 @@ class CardPageLinarManger(
     @Suppress("MaxLineLength")
     private fun getDistancePercentage(child: View): Float {
         return if (mMaxDistanceFromCenter != -1 && mMaxDistanceFromCenter < mDistanceMeasure.getDistanceFromCenterToView(
-                        this
-                )
+                this
+            )
         ) {
             if (mDistanceMeasure.getChildCenterPositionRelativeToViewGroup(child, this)
-                            .toInt() == mDistanceMeasure.getDistanceFromCenterToView(this).toInt()
+                    .toInt() == mDistanceMeasure.getDistanceFromCenterToView(this).toInt()
             ) {
                 1f
             } else {
-                mDistanceMeasure.getDistancePercentageFromViewCenterToMaxDistanceFromLayoutCenter(child, this, mMaxDistanceFromCenter)
+                mDistanceMeasure.getDistancePercentageFromViewCenterToMaxDistanceFromLayoutCenter(
+                    child,
+                    this,
+                    mMaxDistanceFromCenter
+                )
             }
         } else {
             mDistanceMeasure.getDistancePercentageFromClosestEdgeToView(child, this)

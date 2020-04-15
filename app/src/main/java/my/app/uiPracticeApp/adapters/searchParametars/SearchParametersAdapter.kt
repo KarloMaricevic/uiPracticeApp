@@ -10,12 +10,13 @@ class SearchParametersAdapter : RecyclerView.Adapter<ItemSearchParametersViewHol
     private var mParameterList = ArrayList<String>()
 
     override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
+        parent: ViewGroup,
+        viewType: Int
     ): ItemSearchParametersViewHolder {
-        val mBinding = ItemSearchParametarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val mBinding =
+            ItemSearchParametarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemSearchParametersViewHolder(
-                mBinding
+            mBinding
         )
     }
 
@@ -31,12 +32,11 @@ class SearchParametersAdapter : RecyclerView.Adapter<ItemSearchParametersViewHol
     }
 }
 
-class ItemSearchParametersViewHolder(private val mBinding: ItemSearchParametarBinding)
-    : RecyclerView.ViewHolder(mBinding.root) {
+class ItemSearchParametersViewHolder(private val mBinding: ItemSearchParametarBinding) :
+    RecyclerView.ViewHolder(mBinding.root) {
 
     fun setDate(parameter: String) {
         mBinding.parameterMeasure.text = parameter
         mBinding.executePendingBindings()
     }
 }
-

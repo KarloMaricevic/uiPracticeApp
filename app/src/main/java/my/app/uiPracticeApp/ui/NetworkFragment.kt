@@ -36,7 +36,8 @@ abstract class NetworkFragment<VM : NetworkViewModel, R : Router> :
                 HTTP_BAD_REQUEST -> handleHTTPBadRequest()
                 JSON_SYNTAX_EXCEPTION -> handleJsonSyntaxException()
                 UNKNOWN -> handleOtherError()
-                else -> { }
+                else -> {
+                }
             }
         })
     }

@@ -13,7 +13,6 @@ class SearchViewModel @Inject constructor() : BaseViewModel() {
 
     private val datePattern = Pattern.compile(regExDatePattern)
 
-
     enum class FillDateError {
         FILL_DATE,
         FILL_TO_DATE,
@@ -36,11 +35,9 @@ class SearchViewModel @Inject constructor() : BaseViewModel() {
     val isExpanded = MutableLiveData(false)
     var whatDateIsClicked = MutableLiveData(WhatDateIsClicked.NONE)
 
-
     private val isFromAndToDateNotEmpty = MediatorLiveData<Boolean>().apply {
         addSource(fromDate) {
             value = !it.isNullOrEmpty() && !toDate.value.isNullOrEmpty()
-
         }
         addSource(toDate) {
             value = !it.isNullOrEmpty() && !fromDate.value.isNullOrEmpty()
@@ -72,7 +69,6 @@ class SearchViewModel @Inject constructor() : BaseViewModel() {
         whatDateIsClicked.postValue(WhatDateIsClicked.TO_DATE)
     }
 
-
     fun searchButtonClicked() {
         if (checkSearchParameters()) {
             navigateTo.accept(GoToContainerFragment)
@@ -87,25 +83,25 @@ class SearchViewModel @Inject constructor() : BaseViewModel() {
                 return false
             }
         } else {
-                val fromDateFilledCorrectly = datePattern.matcher(fromDate.value ?: "").matches()
-                val toDateFilledCorrectly = datePattern.matcher(toDate.value ?: "").matches()
-                if (!fromDateFilledCorrectly && !toDateFilledCorrectly) {
-                    mFillDateError.accept(FillDateError.FILL_TO_AND_FROM_DATE)
-                    return false
-                } else if (!fromDateFilledCorrectly) {
-                    mFillDateError.accept(FillDateError.FILL_FROM_DATE)
-                    return false
-                } else if (!toDateFilledCorrectly) {
-                    mFillDateError.accept(FillDateError.FILL_TO_DATE)
-                    return false
-                }
+            val fromDateFilledCorrectly = datePattern.matcher(fromDate.value ?: "").matches()
+            val toDateFilledCorrectly = datePattern.matcher(toDate.value ?: "").matches()
+            if (!fromDateFilledCorrectly && !toDateFilledCorrectly) {
+                mFillDateError.accept(FillDateError.FILL_TO_AND_FROM_DATE)
+                return false
+            } else if (!fromDateFilledCorrectly) {
+                mFillDateError.accept(FillDateError.FILL_FROM_DATE)
+                return false
+            } else if (!toDateFilledCorrectly) {
+                mFillDateError.accept(FillDateError.FILL_TO_DATE)
+                return false
+            }
         }
         return true
     }
 
     fun getFillDateError() = mFillDateError as Observable<FillDateError>
 
-    companion object{
+    companion object {
         const val regExDatePattern = """\d{2}/\d{2}/\d{4}"""
     }
 }

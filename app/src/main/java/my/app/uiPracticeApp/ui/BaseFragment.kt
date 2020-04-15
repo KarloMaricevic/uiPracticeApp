@@ -19,7 +19,7 @@ import java.lang.Exception
 import javax.inject.Inject
 
 abstract class BaseFragment<VM : BaseViewModel, R : Router> : Fragment(),
-        LoadingView, NavigationView {
+    LoadingView, NavigationView {
 
     @Inject
     lateinit var mViewModelFactory: ViewModelProvider.Factory
@@ -37,10 +37,10 @@ abstract class BaseFragment<VM : BaseViewModel, R : Router> : Fragment(),
     override fun onCreate(savedInstanceState: Bundle?) {
         if (!isContainedInsedeOtherFragment()) {
             requireActivity()
-                    .onBackPressedDispatcher
-                    .addCallback(this) {
-                        mViewModel.navigateBack()
-                    }
+                .onBackPressedDispatcher
+                .addCallback(this) {
+                    mViewModel.navigateBack()
+                }
         }
         super.onCreate(savedInstanceState)
     }
@@ -48,7 +48,7 @@ abstract class BaseFragment<VM : BaseViewModel, R : Router> : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLoading()
-        if(!isContainedInsedeOtherFragment()) {
+        if (!isContainedInsedeOtherFragment()) {
             observeNavigation()
         }
         connectViewModel()
@@ -91,14 +91,13 @@ abstract class BaseFragment<VM : BaseViewModel, R : Router> : Fragment(),
 
     private fun observeNavigation() {
         mNavigationDisposable = mViewModel.getNavigateTo().subscribe(
-                {
-                    navigate(it)
-                },
-                {
-                    throw Exception("Navigation error: " + it.message)
-                })
+            {
+                navigate(it)
+            },
+            {
+                throw Exception("Navigation error: " + it.message)
+            })
     }
-
 
     abstract fun connectViewModel()
 

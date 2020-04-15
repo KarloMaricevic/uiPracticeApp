@@ -16,23 +16,23 @@ import my.app.uiPracticeApp.core.router.DefaultRouter
 import my.app.uiPracticeApp.databinding.FragmentContainerBinding
 import my.app.uiPracticeApp.viewModels.ContainerViewModel
 
-
-class ContainerFragment : BaseFragment<ContainerViewModel,DefaultRouter>(){
+class ContainerFragment : BaseFragment<ContainerViewModel, DefaultRouter>() {
 
     private lateinit var mBinding: FragmentContainerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity!!.application as BaseApplication)
-                .getAppComponent()
-                .getContainerSubcomponentFactory()
-                .create(this)
-                .inject(this)
-        mViewModel = ViewModelProvider(this,mViewModelFactory).get(ContainerViewModel::class.java)
+            .getAppComponent()
+            .getContainerSubcomponentFactory()
+            .create(this)
+            .inject(this)
+        mViewModel = ViewModelProvider(this, mViewModelFactory).get(ContainerViewModel::class.java)
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         mBinding = FragmentContainerBinding.inflate(inflater, container, false)
@@ -43,6 +43,7 @@ class ContainerFragment : BaseFragment<ContainerViewModel,DefaultRouter>(){
         super.onViewCreated(view, savedInstanceState)
         setUpViewPager()
     }
+
     private fun setUpViewPager() {
         mBinding.containerViewPager.isUserInputEnabled = false
         mBinding.containerViewPager.adapter = TabLayoutAdapter(this)
@@ -51,7 +52,6 @@ class ContainerFragment : BaseFragment<ContainerViewModel,DefaultRouter>(){
             tab.text = getTitle(position)
         }.attach()
     }
-
 
     private fun getTabIcon(position: Int): Int {
         return when (position) {

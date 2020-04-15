@@ -35,44 +35,42 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchRouter>() {
 
     lateinit var mFillErrorObserver: Disposable
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity?.application as BaseApplication)
-                .getAppComponent()
-                .getSearchSubcomponentFactory()
-                .create(this)
-                .inject(this)
+            .getAppComponent()
+            .getSearchSubcomponentFactory()
+            .create(this)
+            .inject(this)
         mDatePickerDialog = DatePickerDialog(
-                context!!,
-                { datePicker, _, _, _ ->
-                    val pickedDate = datePicker.getDate()
-                    when (mViewModel.whatDateIsClicked.value) {
-                        WhatDateIsClicked.DATE -> mBinding.dateEditText.setDate(pickedDate)
-                        WhatDateIsClicked.FROM_DATE -> mBinding.fromDateEditText.setDate(pickedDate)
-                        WhatDateIsClicked.TO_DATE -> mBinding.toDateEditText.setDate(pickedDate)
-                        else -> {
-                        }
+            context!!,
+            { datePicker, _, _, _ ->
+                val pickedDate = datePicker.getDate()
+                when (mViewModel.whatDateIsClicked.value) {
+                    WhatDateIsClicked.DATE -> mBinding.dateEditText.setDate(pickedDate)
+                    WhatDateIsClicked.FROM_DATE -> mBinding.fromDateEditText.setDate(pickedDate)
+                    WhatDateIsClicked.TO_DATE -> mBinding.toDateEditText.setDate(pickedDate)
+                    else -> {
                     }
-                    mViewModel.whatDateIsClicked.postValue(WhatDateIsClicked.NONE)
-                },
-                mCalendar.get(Calendar.YEAR),
-                mCalendar.get(Calendar.MONTH),
-                mCalendar.get(Calendar.DAY_OF_MONTH)
+                }
+                mViewModel.whatDateIsClicked.postValue(WhatDateIsClicked.NONE)
+            },
+            mCalendar.get(Calendar.YEAR),
+            mCalendar.get(Calendar.MONTH),
+            mCalendar.get(Calendar.DAY_OF_MONTH)
         )
         mViewModel = ViewModelProvider(this, mViewModelFactory).get(SearchViewModel::class.java)
         super.onCreate(savedInstanceState)
     }
 
-
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         mBinding = FragmentSearchBinding.inflate(inflater, container, false)
         mBinding.lifecycleOwner = this
         return mBinding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -103,20 +101,20 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchRouter>() {
         })
 
         mFillErrorObserver = mViewModel.getFillDateError().subscribe(
-                {
-                    when (it) {
-                        FILL_DATE -> mBinding.dateTextInputLayout.error = "Fill this filled"
-                        FILL_FROM_DATE -> mBinding.fromDateTextInputLayout.error = "Fill this filled"
-                        FILL_TO_DATE -> mBinding.toDateTextInputLayout.error = "Fill this filled"
-                        FILL_TO_AND_FROM_DATE -> {
-                            mBinding.fromDateTextInputLayout.error = "Fill this filled"
-                            mBinding.toDateTextInputLayout.error = "Fill this filled"
-                        }
-                        else -> {
-                        }
+            {
+                when (it) {
+                    FILL_DATE -> mBinding.dateTextInputLayout.error = "Fill this filled"
+                    FILL_FROM_DATE -> mBinding.fromDateTextInputLayout.error = "Fill this filled"
+                    FILL_TO_DATE -> mBinding.toDateTextInputLayout.error = "Fill this filled"
+                    FILL_TO_AND_FROM_DATE -> {
+                        mBinding.fromDateTextInputLayout.error = "Fill this filled"
+                        mBinding.toDateTextInputLayout.error = "Fill this filled"
                     }
-                },
-                {}
+                    else -> {
+                    }
+                }
+            },
+            {}
         )
     }
 
@@ -136,10 +134,8 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchRouter>() {
         }
     }
 
-
     override fun isContainedInsedeOtherFragment(): Boolean = false
 }
-
 
 fun DatePicker.getDate(): Date {
     val calendar = Calendar.getInstance()

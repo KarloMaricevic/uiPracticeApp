@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class SearchRouter @Inject constructor(fragment: Fragment) : DefaultRouter(fragment) {
 
-    fun navigateToContainerFragment(){
-        val action  = SearchFragmentDirections.actionSearchFragmentToContainerFragment()
+    fun navigateToContainerFragment() {
+        val action = SearchFragmentDirections.actionSearchFragmentToContainerFragment()
         mFragment.findNavController().navigate(action)
     }
 }

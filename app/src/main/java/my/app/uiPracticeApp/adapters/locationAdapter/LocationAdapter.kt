@@ -16,34 +16,36 @@ import my.app.uiPracticeApp.R
 import my.app.uiPracticeApp.data.entities.Location
 import my.app.uiPracticeApp.databinding.ItemLocationBinding
 
+class LocationAdapter(fragmentContext: Context, activity: Activity) :
+    RecyclerView.Adapter<ItemLocationViewHolder>() {
 
-class LocationAdapter(fragmentContext: Context, activity: Activity) : RecyclerView.Adapter<ItemLocationViewHolder>() {
+    // workaround for not measured views in itemDecorator
 
-    //workaround for not measured views in itemDecorator
-
-    private val deviceWidth: Int
-    private val deviceHight: Int
+    private val mViewWidth: Int
+    private val mViewHight: Int
 
     init {
-        val displaymetrics = DisplayMetrics()
-        activity.windowManager.defaultDisplay.getMetrics(displaymetrics)
-        deviceHight = displaymetrics.heightPixels
-        deviceWidth = displaymetrics.widthPixels
+        val displayMetrics = DisplayMetrics()
+        activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val deviceWidth = displayMetrics.widthPixels
+
+        mViewWidth = (deviceWidth * widthToDeviceWidthFactor).toInt()
+        mViewHight = (mViewWidth * hightToWidthFactor).toInt()
     }
 
     private var mLocationsList = arrayListOf<Location>()
 
     private val mGlide = Glide.with(fragmentContext)
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemLocationViewHolder {
-        val mBinding = ItemLocationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val mBinding =
+            ItemLocationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         mBinding.root.layoutParams.apply {
-            width = (deviceWidth * 0.902).toInt()
-            height = (width * 1.287).toInt()
+            width = mViewWidth
+            height = mViewHight
         }
         return ItemLocationViewHolder(
-                mBinding
+            mBinding
         )
     }
 
@@ -53,21 +55,26 @@ class LocationAdapter(fragmentContext: Context, activity: Activity) : RecyclerVi
 
         holder.bindData(mLocationsList[position])
         mGlide
-                .load(R.mipmap.eiffel_tower)
-                .optionalCenterCrop()
-                .into(TargetView(holder.getPictureView()))
+            .load(R.mipmap.eiffel_tower)
+            .optionalCenterCrop()
+            .into(TargetView(holder.getPictureView()))
     }
 
-
     fun setData(locationList: List<Location>) {
-        val diffResult = DiffUtil.calculateDiff(LocationAdapterDiffUtil(mLocationsList, locationList))
+        val diffResult =
+            DiffUtil.calculateDiff(LocationAdapterDiffUtil(mLocationsList, locationList))
         mLocationsList = ArrayList(locationList)
         diffResult.dispatchUpdatesTo(this)
     }
+
+    companion object {
+        const val widthToDeviceWidthFactor = 0.902
+        const val hightToWidthFactor = 1.287
+    }
 }
 
-class ItemLocationViewHolder(private val mBinding: ItemLocationBinding) : RecyclerView.ViewHolder(mBinding.root) {
-
+class ItemLocationViewHolder(private val mBinding: ItemLocationBinding) :
+    RecyclerView.ViewHolder(mBinding.root) {
 
     fun bindData(location: Location) {
         mBinding.location = location
@@ -77,9 +84,7 @@ class ItemLocationViewHolder(private val mBinding: ItemLocationBinding) : Recycl
     fun getPictureView(): View {
         return mBinding.itemLocationConstraintLayout
     }
-
 }
-
 
 class TargetView(private val view: View) : CustomTarget<Drawable>() {
     override fun onLoadCleared(placeholder: Drawable?) {
@@ -91,10 +96,9 @@ class TargetView(private val view: View) : CustomTarget<Drawable>() {
     }
 }
 
-
-class LocationAdapterDiffUtil
-(private val mOldLocationList: List<Location>,
- private val mNewLocationList: List<Location>
+class LocationAdapterDiffUtil(
+    private val mOldLocationList: List<Location>,
+    private val mNewLocationList: List<Location>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
@@ -113,4 +117,3 @@ class LocationAdapterDiffUtil
         return mOldLocationList[oldItemPosition] == mNewLocationList[newItemPosition]
     }
 }
-

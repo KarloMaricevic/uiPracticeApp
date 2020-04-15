@@ -10,11 +10,11 @@ class BookmarkedFragment : BaseFragment<BookmarkedViewModel, DefaultRouter>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity?.application as BaseApplication)
-                .getAppComponent()
-                .getBookmarkedSubcomponentFactory()
-                .create(this)
-                .inject(this)
-        mViewModel = ViewModelProvider(this,mViewModelFactory).get(BookmarkedViewModel::class.java)
+            .getAppComponent()
+            .getBookmarkedSubcomponentFactory()
+            .create(this)
+            .inject(this)
+        mViewModel = ViewModelProvider(this, mViewModelFactory).get(BookmarkedViewModel::class.java)
         super.onCreate(savedInstanceState)
     }
 

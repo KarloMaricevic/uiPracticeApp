@@ -4,7 +4,8 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class SearchParametersItemDecorator(private val marginFromSides : Int) : RecyclerView.ItemDecoration() {
+class SearchParametersItemDecorator(private val marginFromSides: Int) :
+    RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
         view: View,

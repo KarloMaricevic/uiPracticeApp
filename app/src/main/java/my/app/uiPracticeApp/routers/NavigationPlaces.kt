@@ -1,6 +1,5 @@
 package my.app.uiPracticeApp.routers
 
-
 sealed class NavigationPlaces {
     object NavigateBack : NavigationPlaces()
     object ExitApp : NavigationPlaces()
@@ -11,4 +10,3 @@ sealed class NavigationPlaces {
 sealed class SearchNavigationPlaces : NavigationPlaces() {
     object GoToContainerFragment : SearchNavigationPlaces()
 }
-

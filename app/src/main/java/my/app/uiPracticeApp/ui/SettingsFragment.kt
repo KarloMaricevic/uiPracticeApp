@@ -10,11 +10,11 @@ class SettingsFragment : BaseFragment<SettingsViewModel, DefaultRouter>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity?.application as BaseApplication)
-                .getAppComponent()
-                .getSettingsSubcomponentFactory()
-                .create(this)
-                .inject(this)
-        mViewModel = ViewModelProvider(this,mViewModelFactory).get(SettingsViewModel::class.java)
+            .getAppComponent()
+            .getSettingsSubcomponentFactory()
+            .create(this)
+            .inject(this)
+        mViewModel = ViewModelProvider(this, mViewModelFactory).get(SettingsViewModel::class.java)
         super.onCreate(savedInstanceState)
     }
 

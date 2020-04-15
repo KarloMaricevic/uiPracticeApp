@@ -9,66 +9,69 @@ abstract class LinearManagerDistanceMeasure {
     abstract fun getDistanceFromCenterToView(layoutManager: RecyclerView.LayoutManager): Float
 
     abstract fun getChildCenterPositionRelativeToViewGroup(
-            child: View,
-            layoutManager: RecyclerView.LayoutManager
+        child: View,
+        layoutManager: RecyclerView.LayoutManager
     ): Float
 
     fun getDistanceChildCenterToRecyclerViewCenter(
-            child: View,
-            layoutManager: RecyclerView.LayoutManager
+        child: View,
+        layoutManager: RecyclerView.LayoutManager
     ): Float {
         return abs(
-                getChildCenterPositionRelativeToViewGroup(
-                        child,
-                        layoutManager
-                ) - getDistanceFromCenterToView(layoutManager)
+            getChildCenterPositionRelativeToViewGroup(
+                child,
+                layoutManager
+            ) - getDistanceFromCenterToView(layoutManager)
         )
-
     }
 
     fun getDistanceFromChildCenterToViewGroupCenter(
-            child: View,
-            layoutManager: RecyclerView.LayoutManager
+        child: View,
+        layoutManager: RecyclerView.LayoutManager
     ): Float {
         return abs(
-                getChildCenterPositionRelativeToViewGroup(
-                        child,
-                        layoutManager
-                ) - getDistanceFromCenterToView(layoutManager)
+            getChildCenterPositionRelativeToViewGroup(
+                child,
+                layoutManager
+            ) - getDistanceFromCenterToView(layoutManager)
         )
-
     }
 
     fun getDistanceToCloserEdge(
-            child: View,
-            layoutManager: RecyclerView.LayoutManager
+        child: View,
+        layoutManager: RecyclerView.LayoutManager
     ): Float {
         return abs(
-                getDistanceFromCenterToView(layoutManager) - getDistanceFromChildCenterToViewGroupCenter(
-                        child,
-                        layoutManager
-                )
+            getDistanceFromCenterToView(layoutManager) - getDistanceFromChildCenterToViewGroupCenter(
+                child,
+                layoutManager
+            )
         )
     }
 
-
-    fun getDistancePercentageFromClosestEdgeToView(child: View, layoutManager: RecyclerView.LayoutManager): Float {
+    fun getDistancePercentageFromClosestEdgeToView(
+        child: View,
+        layoutManager: RecyclerView.LayoutManager
+    ): Float {
         return getDistanceToCloserEdge(
-                child,
-                layoutManager
+            child,
+            layoutManager
         ) / getDistanceFromCenterToView(
-                layoutManager)
+            layoutManager
+        )
     }
-
 
     @Suppress("MaxLineLength")
-    fun getDistancePercentageFromViewCenterToMaxDistanceFromLayoutCenter(child: View, layoutManager: RecyclerView.LayoutManager, distance: Int): Float {
+    fun getDistancePercentageFromViewCenterToMaxDistanceFromLayoutCenter(
+        child: View,
+        layoutManager: RecyclerView.LayoutManager,
+        distance: Int
+    ): Float {
         return 1 - getDistanceChildCenterToRecyclerViewCenter(
-                child,
-                layoutManager
+            child,
+            layoutManager
         ) / distance
     }
-
 
     companion object {
 
@@ -76,19 +79,17 @@ abstract class LinearManagerDistanceMeasure {
             return object : LinearManagerDistanceMeasure() {
                 override fun getDistanceFromCenterToView(layoutManager: RecyclerView.LayoutManager): Float {
                     return layoutManager.height / 2f
-
                 }
 
                 override fun getChildCenterPositionRelativeToViewGroup(
-                        child: View,
-                        layoutManager: RecyclerView.LayoutManager
+                    child: View,
+                    layoutManager: RecyclerView.LayoutManager
                 ): Float {
                     return layoutManager.getDecoratedTop(child) + abs(
-                            layoutManager.getDecoratedTop(
-                                    child
-                            ) - layoutManager.getDecoratedTop(child)
+                        layoutManager.getDecoratedTop(
+                            child
+                        ) - layoutManager.getDecoratedTop(child)
                     ) / 2f
-
                 }
             }
         }
@@ -101,11 +102,13 @@ abstract class LinearManagerDistanceMeasure {
                 }
 
                 override fun getChildCenterPositionRelativeToViewGroup(
-                        child: View,
-                        layoutManager: RecyclerView.LayoutManager
+                    child: View,
+                    layoutManager: RecyclerView.LayoutManager
                 ): Float {
-                    return layoutManager.getDecoratedLeft(child) + (layoutManager.getDecoratedRight(child) - layoutManager.getDecoratedLeft(
-                            child
+                    return layoutManager.getDecoratedLeft(child) + (layoutManager.getDecoratedRight(
+                        child
+                    ) - layoutManager.getDecoratedLeft(
+                        child
                     )) / 2f
                 }
             }

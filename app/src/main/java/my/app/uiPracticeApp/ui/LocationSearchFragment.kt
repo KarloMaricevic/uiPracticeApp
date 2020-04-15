@@ -28,20 +28,20 @@ import my.app.uiPracticeApp.viewModels.LocationSearchViewModel
 
 @Suppress("TooManyFunctions")
 class LocationSearchFragment : BaseFragment<LocationSearchViewModel, DefaultRouter>(),
-        OnSnapPositionChangeListener,
-        DeleteItemInterface {
+    OnSnapPositionChangeListener,
+    DeleteItemInterface {
 
     private lateinit var mBinding: FragmentLocationSearchBinding
 
     private lateinit var mLocationAdapter: LocationAdapter
 
     private val mSearchParametersAdapter =
-            SearchParametersAdapter()
+        SearchParametersAdapter()
 
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
 
     private val mItemDecorator: RecyclerView.ItemDecoration =
-            LocationAdapterItemDecorator()
+        LocationAdapterItemDecorator()
 
     private lateinit var mItemTouchHelper: ItemTouchHelper.SimpleCallback
 
@@ -51,30 +51,31 @@ class LocationSearchFragment : BaseFragment<LocationSearchViewModel, DefaultRout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity!!.application as BaseApplication)
-                .getAppComponent()
-                .getLocationSearchSubcomponentFactory()
-                .create(this)
-                .inject(this)
+            .getAppComponent()
+            .getLocationSearchSubcomponentFactory()
+            .create(this)
+            .inject(this)
         mViewModel =
-                ViewModelProvider(this, mViewModelFactory).get(LocationSearchViewModel::class.java)
+            ViewModelProvider(this, mViewModelFactory).get(LocationSearchViewModel::class.java)
         mLocationAdapter =
-                LocationAdapter(
-                        context!!,
-                        activity!!
-                )
+            LocationAdapter(
+                context!!,
+                activity!!
+            )
         mLayoutManager =
-                CardPageLinarManger(
-                        context!!,
-                        RecyclerView.HORIZONTAL
-                )
+            CardPageLinarManger(
+                context!!,
+                RecyclerView.HORIZONTAL
+            )
         mItemTouchHelper = OnSwipeUpDeleteSimpleCallback(this)
         mItemTouch = ItemTouchHelper(mItemTouchHelper)
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         mBinding = FragmentLocationSearchBinding.inflate(inflater, container, false)
         return mBinding.root
@@ -100,13 +101,13 @@ class LocationSearchFragment : BaseFragment<LocationSearchViewModel, DefaultRout
 
     override fun connectViewModel() {
         mViewModel.mLocationList.observe(
-                viewLifecycleOwner,
-                Observer { mLocationAdapter.setData(it) }
+            viewLifecycleOwner,
+            Observer { mLocationAdapter.setData(it) }
         )
 
         mViewModel.mSearchParametersList.observe(
-                viewLifecycleOwner,
-                Observer { mSearchParametersAdapter.setData(it) }
+            viewLifecycleOwner,
+            Observer { mSearchParametersAdapter.setData(it) }
         )
     }
 
@@ -116,12 +117,14 @@ class LocationSearchFragment : BaseFragment<LocationSearchViewModel, DefaultRout
         mViewModel.deleteLocation(position)
     }
 
-
     private fun setSearchParametersRecyclerView() {
-        mBinding.searchParametersRecyclerView.addItemDecoration(SearchParametersItemDecorator(searchParamsMargin))
+        mBinding.searchParametersRecyclerView.addItemDecoration(
+            SearchParametersItemDecorator(
+                searchParamsMargin
+            )
+        )
         mBinding.searchParametersRecyclerView.adapter = mSearchParametersAdapter
     }
-
 
     private fun setUpLocationAdapter() {
         mLocationAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -140,7 +143,7 @@ class LocationSearchFragment : BaseFragment<LocationSearchViewModel, DefaultRout
 
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 mBinding.recyclerAndPositionCounter.positionCounter.itemCountTextView.text =
-                        (mLocationAdapter.itemCount).toString()
+                    (mLocationAdapter.itemCount).toString()
             }
         })
     }
@@ -152,8 +155,8 @@ class LocationSearchFragment : BaseFragment<LocationSearchViewModel, DefaultRout
             layoutManager = mLayoutManager
             adapter = mLocationAdapter
             attachSnapHelperWithListener(
-                    mSnapHelper,
-                    onSnapPositionChangeListener = this@LocationSearchFragment
+                mSnapHelper,
+                onSnapPositionChangeListener = this@LocationSearchFragment
             )
         }
     }
@@ -167,19 +170,16 @@ class LocationSearchFragment : BaseFragment<LocationSearchViewModel, DefaultRout
 
     companion object {
         const val searchParamsMargin = 15
-
     }
-
 }
 
 fun RecyclerView.attachSnapHelperWithListener(
-        snapHelper: SnapHelper,
-        behavior: SnapOnScrollListener.Behavior = SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
-        onSnapPositionChangeListener: OnSnapPositionChangeListener
+    snapHelper: SnapHelper,
+    behavior: SnapOnScrollListener.Behavior = SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
+    onSnapPositionChangeListener: OnSnapPositionChangeListener
 ) {
     snapHelper.attachToRecyclerView(this)
     val snapOnScrollListener =
-            SnapOnScrollListener(snapHelper, behavior, onSnapPositionChangeListener)
+        SnapOnScrollListener(snapHelper, behavior, onSnapPositionChangeListener)
     addOnScrollListener(snapOnScrollListener)
 }
-

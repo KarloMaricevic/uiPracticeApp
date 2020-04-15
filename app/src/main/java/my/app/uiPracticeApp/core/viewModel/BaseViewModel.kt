@@ -9,7 +9,7 @@ import my.app.uiPracticeApp.routers.NavigationPlaces
 import my.app.uiPracticeApp.core.viewModel.BaseViewModel.Loading.LOADING
 import my.app.uiPracticeApp.core.viewModel.BaseViewModel.Loading.NOT_LOADING
 
-abstract class BaseViewModel: ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     protected val navigateTo = PublishRelay.create<NavigationPlaces>()
 
